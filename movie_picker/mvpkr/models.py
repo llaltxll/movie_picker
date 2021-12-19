@@ -14,29 +14,6 @@ from django.db import models
 #        'divorces', 'spouses_with_children', 'children'],
 #       dtype='object')
 
-class Movies(models.Model) :
-	title = models.CharField(max_length=128)
-	year = models.IntegerField()
-	duration models.IntegerField()
-	country_id = models.ForeignKey(Country, on_delete=models.CASCADE)
-	language_id = models.ForeignKey(Language, on_delete=models.CASCADE)
-	prod_company_id = models.ForeignKey(ProductionComp, on_delete=models.CASCADE)
-	votes = models.IntegerField()
-	avg_vote float
-	gross_income = models.IntegerField()
-	n_user_reviews = models.IntegerField()
-	n_critic_reviews = models.IntegerField()
-	imdb_title_id = models.IntegerField()
-	# imdb ids are stored as ints the actual id can be reconstructed later
-	# tt#######
-	
-	# many-to-many fileds below:
-	generes = models.ManyToManyField('Geners', through='GenersOfMovies')
-	credits = models.ManyToManyField('Names', through='TitlePrincipal')
-
-	def __str__(self) :
-		return self.title
-
 class Country(models.Model) :
 	name = models.CharField(max_length=128)
 
@@ -57,6 +34,12 @@ class ProductionComp(models.Model) :
 
 class Geners(models.Model):
 	name = models.CharField(max_length=128)
+
+	def __str__(self) :
+		return self.name
+
+class ReasonOfDeath(models.Model):
+	name = models.ForeignKey(Geners, on_delete=models.CASCADE)
 
 	def __str__(self) :
 		return self.name
@@ -83,11 +66,30 @@ class Names(models.Model):
 
 	def __str__(self) :
 		return self.name
-class ReasonOfDeath(models.Model):
-	name = models.ForeignKey(Geners, on_delete=models.CASCADE)
+
+
+class Movies(models.Model) :
+	title = models.CharField(max_length=128)
+	year = models.IntegerField()
+	duration = models.IntegerField()
+	country_id = models.ForeignKey(Country, on_delete=models.CASCADE)
+	language_id = models.ForeignKey(Language, on_delete=models.CASCADE)
+	prod_company_id = models.ForeignKey(ProductionComp, on_delete=models.CASCADE)
+	votes = models.IntegerField()
+	avg_vote = models.FloatField()
+	gross_income = models.IntegerField()
+	n_user_reviews = models.IntegerField()
+	n_critic_reviews = models.IntegerField()
+	imdb_title_id = models.IntegerField()
+	# imdb ids are stored as ints the actual id can be reconstructed later
+	# tt#######
+	
+	# many-to-many fileds below:
+	generes = models.ManyToManyField('Geners', through='GenersOfMovies')
+	credits = models.ManyToManyField('Names', through='TitlePrincipal')
 
 	def __str__(self) :
-		return self.name
+		return self.title
 
 class GenersOfMovies(models.Model):
 	movie_id = models.ForeignKey(Movies, on_delete=models.CASCADE)
@@ -102,4 +104,3 @@ class TitlePrincipal(models.Model):
 	category = models.CharField(max_length=128)
 	def __str__(self) :
 		return self.movie_id +', '+ self.name_id
-
