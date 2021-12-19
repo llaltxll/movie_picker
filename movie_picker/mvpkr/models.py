@@ -39,7 +39,7 @@ class Geners(models.Model):
 		return self.name
 
 class ReasonOfDeath(models.Model):
-	name = models.ForeignKey(Geners, on_delete=models.CASCADE)
+	name = models.CharField(max_length=128)
 
 	def __str__(self) :
 		return self.name
@@ -48,11 +48,11 @@ class ReasonOfDeath(models.Model):
 class Names(models.Model):
 	name = models.CharField(max_length=128)
 	height = models.IntegerField()
-	bio = models.CharField(max_length=128)
-	birth_details = models.CharField(max_length=128)
+	bio = models.CharField(max_length=256)
+	birth_details = models.CharField(max_length=256)
 	date_of_birth = models.DateField()
 	place_of_birth = models.CharField(max_length=128)
-	death_details = models.CharField(max_length=128)
+	death_details = models.CharField(max_length=256)
 	date_of_death = models.DateField()
 	place_of_death = models.CharField(max_length=128)
 	reason_of_death_id = models.ForeignKey(ReasonOfDeath, on_delete=models.CASCADE)
@@ -103,4 +103,4 @@ class TitlePrincipal(models.Model):
 	ordering = models.IntegerField()
 	category = models.CharField(max_length=128)
 	def __str__(self) :
-		return self.movie_id +', '+ self.name_id
+		return str(self.movie_id) +' <--> Movie '+ str(self.name_id)
