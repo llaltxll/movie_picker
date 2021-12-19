@@ -47,19 +47,19 @@ class ReasonOfDeath(models.Model):
 # https://www.geeksforgeeks.org/datefield-django-models/#field-options
 class Names(models.Model):
 	name = models.CharField(max_length=128)
-	height = models.IntegerField()
+	height = models.IntegerField(null=True)
 	bio = models.CharField(max_length=256)
 	birth_details = models.CharField(max_length=256)
-	date_of_birth = models.DateField()
+	date_of_birth = models.DateField(null=True)
 	place_of_birth = models.CharField(max_length=128)
 	death_details = models.CharField(max_length=256)
-	date_of_death = models.DateField()
+	date_of_death = models.DateField(null=True)
 	place_of_death = models.CharField(max_length=128)
 	reason_of_death_id = models.ForeignKey(ReasonOfDeath, on_delete=models.CASCADE)
-	spouses = models.IntegerField()
-	divorces = models.IntegerField()
-	spouses_with_children = models.IntegerField()
-	children = models.IntegerField()
+	spouses = models.IntegerField(null=True)
+	divorces = models.IntegerField(null=True)
+	spouses_with_children = models.IntegerField(null=True)
+	children = models.IntegerField(null=True)
 	imdb_name_id = models.IntegerField()
 	# imdb ids are stored as ints the actual id can be reconstructed later
 	# nn#######
