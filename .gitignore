@@ -2,3 +2,5 @@
 IMDB/
 *.sqlite3
 *.pyc
+movie_picker/.DS_Store
+.DS_Store
